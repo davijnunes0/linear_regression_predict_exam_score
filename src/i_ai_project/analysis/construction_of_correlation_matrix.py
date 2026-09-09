@@ -1,5 +1,5 @@
 import numpy as np
-from analysis.statistics import pearson_correlation
+from i_ai_project.analysis.statistics import pearson_correlation
 import matplotlib.pyplot as plt
 from matplotlib.colors import TwoSlopeNorm
 from matplotlib.patches import Rectangle
