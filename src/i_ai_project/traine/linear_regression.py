@@ -24,7 +24,7 @@ class LinearRegressionEquation:
         # np.ones((m,1)) cria uma coluna de uns, (m x 1)
         # np.c[a, b] é uma "Index  trick" do NumPy que concatena colunas (empilha horizontalmente).
         # Porque a coluna de uns? Luiz é para que o intercepto entre na equação como um coeficiente comum:
-        # (y estimatica) = theta_0 * 1
+        # (y estimativa) = theta_0 * 1
         X_b = np.c_[
             np.ones((m, 1)),
             x
