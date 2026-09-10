@@ -44,7 +44,7 @@ def prepare_data():
         mediana = X_train[col].median() # Mediana do treino (ignora NAN)
         X_train[col] = X_train[col].fillna(mediana)
         X_test[col] = X_test[col].fillna(mediana)
-    
+
 
         # 5. encoding ordinal na mão — Low/Medium/High viram 0/1/2
     for col, order in ORDINAL_ORDERS.items():
