@@ -3,11 +3,12 @@ import sys
 import matplotlib.pyplot as plt
 import numpy as np
 
-from i_ai_project.traine.linear_regression import LinearRegressionEquation
+from i_ai_project.traine.linear_regression import LinearRegressionEquation, GradientDescent
 from i_ai_project.utils.data_prep import prepare_data
 
 TRAINES = {
     "linear_regression": LinearRegressionEquation,
+    "gradient_descent": GradientDescent,
 }
 
 
@@ -41,6 +42,7 @@ def run_traine():
     print(f"Intercepto: {model.intercept_:.4f}")
     print(f"Número de coeficientes: {len(model.coef_)}")
     print(f"RMSE: {rmse:.4f}")
+    print(f"MSE:  {mse:.4f}")
     print(f"R²:   {r2:.4f}")
 
     # 5. Compara predições com valores reais (primeiras 5 amostras)
