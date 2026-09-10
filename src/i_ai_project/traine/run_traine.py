@@ -3,7 +3,8 @@ import sys
 import matplotlib.pyplot as plt
 import numpy as np
 
-from i_ai_project.traine.linear_regression import LinearRegressionEquation, GradientDescent
+from i_ai_project.traine.linear_regression import LinearRegressionEquation
+from i_ai_project.traine.gradient_descent import GradientDescent
 from i_ai_project.utils.data_prep import prepare_data
 
 TRAINES = {
@@ -11,12 +12,25 @@ TRAINES = {
     "gradient_descent": GradientDescent,
 }
 
+# Apelidos aceitos na linha de comando (ex.: regressão linear, descida do gradiente)
+ALIASES = {
+    "regressao_linear": "linear_regression",
+    "regressão_linear": "linear_regression",
+    "regressao": "linear_regression",
+    "linear": "linear_regression",
+    "descida_do_gradiente": "gradient_descent",
+    "descida_gradiente": "gradient_descent",
+    "gradiente": "gradient_descent",
+    "gd": "gradient_descent",
+}
+
 
 def run_traine():
     traine_type = sys.argv[1] if len(sys.argv) > 1 else "linear_regression"
+    traine_type = ALIASES.get(traine_type, traine_type)
 
     if traine_type not in TRAINES:
-        print(f"Tipo de treino desconhecido: '{traine_type}'")
+        print(f"Tipo de treino desconhecido: '{sys.argv[1]}'")
         print(f"Opções válidas: {', '.join(TRAINES)}")
         sys.exit(1)
 
@@ -50,19 +64,21 @@ def run_traine():
     for real, pred in zip(y_test[:5], y_pred[:5]):
         print(f"  real: {real:6.2f} | predito: {pred:6.2f}")
 
-    # 6. Gráficos: real vs predito + curva de aprendizado
-    plot_results(traine_type, TRAINES[traine_type], X_train, y_train, X_test, y_test, y_pred)
+    # 6. Gráficos: real vs predito + gráfico específico do método
+    plot_results(traine_type, model, TRAINES[traine_type], X_train, y_train, X_test, y_test, y_pred)
 
 
-def plot_results(name, model_class, X_train, y_train, X_test, y_test, y_pred):
+def plot_results(name, model, model_class, X_train, y_train, X_test, y_test, y_pred):
     """Gera dois gráficos e salva como PNG.
 
     - Real vs Predito: cada ponto é uma amostra do teste; quanto mais
-      colado na linha pontilhada (y = x), melhor o modelo.
-    - Curva de aprendizado: como a regressão pela Equação Normal é uma
-      fórmula fechada (sem épocas/iterações), "aprender iterativamente"
-      não se aplica — o mais próximo é medir o RMSE no teste treinando
-      com frações crescentes dos dados de treino.
+      colado na linha pontilhada (y = x), melhor o modelo. Vale para
+      qualquer método.
+    - Direita: depende do método. Se o modelo registrou histórico de
+      custo por época (Gradient Descent), plota a convergência do custo.
+      Caso contrário (Equação Normal), como não há épocas/iterações, o
+      mais próximo é medir o RMSE no teste treinando com frações
+      crescentes dos dados de treino.
     """
     fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
@@ -76,21 +92,28 @@ def plot_results(name, model_class, X_train, y_train, X_test, y_test, y_pred):
     ax.set_title("Real vs Predito (teste)")
     ax.legend()
 
-    # direita: curva de aprendizado
+    # direita: convergência do custo (GD) ou curva de aprendizado (Equação Normal)
     ax = axes[1]
-    fractions = np.linspace(0.05, 1.0, 20)
-    rmse_curve = []
-    n = len(X_train)
-    for f in fractions:
-        k = max(1, int(f * n))
-        m = model_class()
-        m.fit(X_train[:k], y_train[:k])
-        pred = m.predict(X_test)
-        rmse_curve.append(np.sqrt(np.mean((np.asarray(y_test) - pred) ** 2)))
-    ax.plot(fractions * 100, rmse_curve, marker="o")
-    ax.set_xlabel("% dos dados de treino usados")
-    ax.set_ylabel("RMSE (teste)")
-    ax.set_title("Curva de aprendizado")
+    cost_history = getattr(model, "cost_history_", None)
+    if cost_history:
+        ax.plot(np.arange(1, len(cost_history) + 1), cost_history)
+        ax.set_xlabel("Época")
+        ax.set_ylabel("Custo (MSE)")
+        ax.set_title("Convergência do Gradient Descent")
+    else:
+        fractions = np.linspace(0.05, 1.0, 20)
+        rmse_curve = []
+        n = len(X_train)
+        for f in fractions:
+            k = max(1, int(f * n))
+            m = model_class()
+            m.fit(X_train[:k], y_train[:k])
+            pred = m.predict(X_test)
+            rmse_curve.append(np.sqrt(np.mean((np.asarray(y_test) - pred) ** 2)))
+        ax.plot(fractions * 100, rmse_curve, marker="o")
+        ax.set_xlabel("% dos dados de treino usados")
+        ax.set_ylabel("RMSE (teste)")
+        ax.set_title("Curva de aprendizado")
 
     fig.tight_layout()
     out = f"resultado_{name}.png"
