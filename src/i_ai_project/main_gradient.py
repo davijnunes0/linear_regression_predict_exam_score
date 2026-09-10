@@ -1,5 +1,5 @@
 from i_ai_project.utils.data_prep import prepare_data
-from i_ai_project.traine.linear_regression import GradientDescent
+from i_ai_project.traine.gradient_descent import GradientDescent
 from i_ai_project.analysis.gradient_descent_analysis import plot_weights_evolution, plot_cost_convergence
 
 def main_gradiente():

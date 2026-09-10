@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-from i_ai_project.traine.linear_regression import GradientDescent
+from i_ai_project.traine.gradient_descent import GradientDescent
 
 def plot_weights_evolution(model: GradientDescent, max_epochs: int = 100) -> None:
     """
@@ -62,3 +62,17 @@ def plot_cost_convergence(x_train: np.ndarray, y_train: np.ndarray, learning_rat
 
     plt.savefig("cost_convergence.png", dpi=120)
     plt.show()
+
+if __name__ == "__main__":
+    from i_ai_project.utils.data_prep import prepare_data
+
+    X_train, X_test, y_train, y_test = prepare_data()
+
+    print("Gerando Gráfico 1: Evolução dos Pesos")
+    model = GradientDescent(learning_rate=0.1, epochs=200)
+    model.fit(X_train, y_train)
+    plot_weights_evolution(model, max_epochs=100)
+
+    print("Gerando Gráfico 2: Convergência do Custo (MSE)")
+    taxas = [0.1, 0.01, 0.001]
+    plot_cost_convergence(X_train, y_train, learning_rates=taxas, epochs=500)
