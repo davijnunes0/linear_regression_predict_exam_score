@@ -61,7 +61,7 @@ def run_traine():
 
     # 5. Compara predições com valores reais (primeiras 5 amostras)
     print("\nComparação (real vs predito):")
-    for real, pred in zip(y_test[:5], y_pred[:5]):
+    for real, pred in zip(y_test[:10], y_pred[:10]):
         print(f"  real: {real:6.2f} | predito: {pred:6.2f}")
 
     # 6. Gráficos: real vs predito + gráfico específico do método

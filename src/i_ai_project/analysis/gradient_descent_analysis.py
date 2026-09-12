@@ -29,9 +29,10 @@ def plot_weights_evolution(model: GradientDescent, max_epochs: int = 100) -> Non
     ax.set_ylabel("Weight Value")
     ax.grid(True, linestyle='--', alpha=0.7)
     fig.tight_layout()
-    
+
     plt.savefig("weights_evolution.png", dpi=120)
     plt.show()
+
 
 def plot_cost_convergence(x_train: np.ndarray, y_train: np.ndarray, learning_rates: list[float], epochs: int = 500) -> None:
     """

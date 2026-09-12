@@ -3,7 +3,7 @@ import pandas as pd
 from i_ai_project.utils.paths import path_resolve
 from i_ai_project.data.loading import load_encodings, read_csv
 from i_ai_project.data.encoding import convert_to_numeric
-from i_ai_project.analysis.statistics import pearson_correlation
+from i_ai_project.analysis.correlation import pearson_correlation
 from i_ai_project.analysis.construction_of_correlation_matrix import build_correlation_matrix, plot_target_correlations,plot_correlation_matrix,  get_target_correlations, plot_feature_vs_target
 
 def main():
