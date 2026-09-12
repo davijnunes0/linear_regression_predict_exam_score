@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.manifold import TSNE
+from i_ai_project.utils.paths import path_resolve
 
 def apply_tsne(x_data: np.ndarray, random_state: int = 42) -> np.ndarray:
     """
@@ -24,7 +25,7 @@ def plot_tsne_unlabeled(x_tsne: np.ndarray) -> None:
     ax.grid(True, linestyle='--', alpha=0.5)
     fig.tight_layout()
     
-    plt.savefig("tsne_sem_rotulos.png", dpi=120)
+    plt.savefig(path_resolve(2, "figures/tsne_sem_rotulos.png"), dpi=120)
     plt.show()
 
 def plot_tsne_labeled(x_tsne: np.ndarray, y_target: np.ndarray) -> None:
@@ -45,5 +46,5 @@ def plot_tsne_labeled(x_tsne: np.ndarray, y_target: np.ndarray) -> None:
     ax.grid(True, linestyle='--', alpha=0.5)
     fig.tight_layout()
     
-    plt.savefig("tsne_com_rotulos.png", dpi=120)
+    plt.savefig(path_resolve(2, "figures/tsne_com_rotulos.png"), dpi=120)
     plt.show()

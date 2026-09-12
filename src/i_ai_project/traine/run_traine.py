@@ -6,6 +6,7 @@ import numpy as np
 from i_ai_project.traine.linear_regression import LinearRegressionEquation
 from i_ai_project.traine.gradient_descent import GradientDescent
 from i_ai_project.utils.data_prep import prepare_data
+from i_ai_project.utils.paths import path_resolve
 
 TRAINES = {
     "linear_regression": LinearRegressionEquation,
@@ -116,7 +117,7 @@ def plot_results(name, model, model_class, X_train, y_train, X_test, y_test, y_p
         ax.set_title("Curva de aprendizado")
 
     fig.tight_layout()
-    out = f"resultado_{name}.png"
+    out = path_resolve(2, f"figures/resultado_{name}.png")
     fig.savefig(out, dpi=120)
     plt.show()
 

@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from i_ai_project.traine.gradient_descent import GradientDescent
+from i_ai_project.utils.paths import path_resolve
 
 def plot_weights_evolution(model: GradientDescent, max_epochs: int = 100) -> None:
     """
@@ -30,7 +31,7 @@ def plot_weights_evolution(model: GradientDescent, max_epochs: int = 100) -> Non
     ax.grid(True, linestyle='--', alpha=0.7)
     fig.tight_layout()
 
-    plt.savefig("weights_evolution.png", dpi=120)
+    plt.savefig(path_resolve(2, "figures/weights_evolution.png"), dpi=120)
     plt.show()
 
 
@@ -61,7 +62,7 @@ def plot_cost_convergence(x_train: np.ndarray, y_train: np.ndarray, learning_rat
     ax.grid(True, linestyle='--', alpha=0.7)
     fig.tight_layout()
 
-    plt.savefig("cost_convergence.png", dpi=120)
+    plt.savefig(path_resolve(2, "figures/cost_convergence.png"), dpi=120)
     plt.show()
 
 if __name__ == "__main__":

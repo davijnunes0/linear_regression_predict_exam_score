@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 from i_ai_project.traine.linear_regression import LinearRegressionEquation
+from i_ai_project.utils.paths import path_resolve
 
 
 def get_feature_weights(model: LinearRegressionEquation, feature_names: list[str]) -> dict[str, float]:
@@ -75,7 +76,7 @@ def plot_feature_weights(weights: dict[str, float], model_name: str = "Linear Re
     # Ajusta automaticamente os espaçamentos para que nada fique cortado (título, rótulos, etc).
     plt.tight_layout()
 
-    plt.savefig("feature_weights.png", dpi=120)
+    plt.savefig(path_resolve(2, "figures/feature_weights.png"), dpi=120)
     plt.show()
 
 

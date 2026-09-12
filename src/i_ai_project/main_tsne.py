@@ -15,7 +15,7 @@ def main_tsne():
     print("4. Gerando figura com rótulos (Exam_Score)...")
     plot_tsne_labeled(X_tsne, y_train)
     
-    print("Tudo concluído! Gráficos salvos na raiz.")
+    print("Tudo concluído! Gráficos salvos na pasta figures/.")
 
 if __name__ == "__main__":
     main_tsne()
